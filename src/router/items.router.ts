@@ -33,6 +33,7 @@ export const itemsRouter = express.Router();
 const con = new ItemController();
 itemsRouter.get('/', con.listItems);
 itemsRouter.get('/vime', con.vime);
+itemsRouter.get('/tube', con.tube);
 
 // GET items/:id
 // import {

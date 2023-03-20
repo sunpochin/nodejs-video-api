@@ -11,7 +11,7 @@ dotenv.config();
 const app = express();
 app.use(helmet());
 app.use(express.json());
-app.use('/items', itemsRouter);
+app.use('/', itemsRouter);
 
 let todos: string[] = ['todo 1', 'todo 2'];
 

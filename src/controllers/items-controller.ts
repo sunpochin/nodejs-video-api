@@ -1,9 +1,45 @@
-import { Request, Response, RequestHandler } from "express";
+import { Request, Response, RequestHandler } from 'express';
 import { Item, Items } from '../models/items.interface';
 import * as ItemService from '../models/items.service';
 
+const { google } = require('googleapis');
 
 class ItemController {
+	async tube(req: Request, res: Response) {
+		const service = google.youtube({
+			version: 'v3',
+			auth: 'AIzaSyBzRd59uff7o3OHqOY9jhOtWihZeehQFjE',
+		});
+		let msg = [];
+		
+		const res2 = await service.search.list(
+			{
+				q: '餵食貓咪',
+				part: ['snippet'],
+				regionCode: 'de',
+			},
+			(err, res2) => {
+				if (err) {
+					return console.log('error: ' + err);
+				}
+				const videos = res2.data.items;
+				if (videos.length) {
+					// console.log('Videos: ', videos);
+					videos.map((video) => {
+						let msg1 = `${video.snippet.title} (https://www.youtube.com/watch?v=${video.id.videoId}) `;
+						console.log(msg1);
+						msg.push(msg1);
+					});
+				} else {
+					console.log('no video found.');
+				}
+				res.send(msg);
+			}
+		);
+
+		
+	}
+
 	async vime(req: Request, res: Response) {
 		let Vimeo = require('vimeo').Vimeo;
 		let client = new Vimeo(
@@ -18,7 +54,7 @@ class ItemController {
 				// path: '/tutorial',
 				// path: '/users/user13911393',
 				// path: '/videos/807306477',
-				path: '/users/3494037/projects',
+				path: '/users/13911393/projects',
 				// path: '/users/13911393/projects/15430542/videos',
 			},
 			function (error: any, body: any, status_code: any, headers: any) {
@@ -76,4 +112,3 @@ export default ItemController;
 // 			updateTodo: item,
 // 		});
 // };
-
