@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sunpochin/petKnow.git"
+		"url": "git+https://github.com/sunpochin/nodejs-video-api.git"
 	},
 	"author": "",
 	"license": "ISC",
@@ -23,6 +23,7 @@
 		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"express": "^4.18.2",
+		"googleapis": "^113.0.0",
 		"helmet": "^6.0.1",
 		"uuid": "^9.0.0",
 		"vimeo": "^2.1.1"

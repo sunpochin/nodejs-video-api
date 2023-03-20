@@ -2,6 +2,7 @@ import { Request, Response, RequestHandler } from "express";
 import { Item, Items } from '../models/items.interface';
 import * as ItemService from '../models/items.service';
 
+
 class ItemController {
 	async vime(req: Request, res: Response) {
 		let Vimeo = require('vimeo').Vimeo;
@@ -17,7 +18,7 @@ class ItemController {
 				// path: '/tutorial',
 				// path: '/users/user13911393',
 				// path: '/videos/807306477',
-				path: '/users/13911393/projects',
+				path: '/users/3494037/projects',
 				// path: '/users/13911393/projects/15430542/videos',
 			},
 			function (error: any, body: any, status_code: any, headers: any) {
