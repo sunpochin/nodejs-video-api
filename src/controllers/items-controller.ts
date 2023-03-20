@@ -10,7 +10,7 @@ class ItemController {
 			version: 'v3',
 			auth: 'AIzaSyBzRd59uff7o3OHqOY9jhOtWihZeehQFjE',
 		});
-		let msg = [];
+		let msg: string[] = [];
 		
 		const res2 = await service.search.list(
 			{
@@ -18,14 +18,14 @@ class ItemController {
 				part: ['snippet'],
 				regionCode: 'de',
 			},
-			(err, res2) => {
+			(err: any, res2: any) => {
 				if (err) {
 					return console.log('error: ' + err);
 				}
 				const videos = res2.data.items;
 				if (videos.length) {
 					// console.log('Videos: ', videos);
-					videos.map((video) => {
+					videos.map((video: any) => {
 						let msg1 = `${video.snippet.title} (https://www.youtube.com/watch?v=${video.id.videoId}) `;
 						console.log(msg1);
 						msg.push(msg1);

@@ -16,7 +16,7 @@ app.use('/', itemsRouter);
 let todos: string[] = ['todo 1', 'todo 2'];
 
 app.get('/', function (req, res) {
-	res.json('PetKnow');
+	res.json('nodejs video');
 });
 
 // 取得所有 todo
