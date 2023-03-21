@@ -6,6 +6,9 @@ const { google } = require('googleapis');
 
 class ItemController {
 	async tube(req: Request, res: Response) {
+		console.log('req.query: ', req.query);
+
+
 		const service = google.youtube({
 			version: 'v3',
 			auth: 'AIzaSyBzRd59uff7o3OHqOY9jhOtWihZeehQFjE',
@@ -14,7 +17,7 @@ class ItemController {
 		
 		const res2 = await service.search.list(
 			{
-				q: '餵食貓咪',
+				q: req.query.q,
 				part: ['snippet'],
 				regionCode: 'de',
 			},
