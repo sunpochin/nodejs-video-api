@@ -3,18 +3,17 @@ import { Item, Items } from '../models/items.interface';
 import * as ItemService from '../models/items.service';
 
 const { google } = require('googleapis');
+const service = google.youtube({
+	version: 'v3',
+	auth: 'AIzaSyABuFZuMgrpmclQfB2CEdz-VZdMYZN3UNo',
+});
 
 class ItemController {
 	async tube(req: Request, res: Response) {
 		console.log('req.query: ', req.query);
 
-
-		const service = google.youtube({
-			version: 'v3',
-			auth: 'AIzaSyBzRd59uff7o3OHqOY9jhOtWihZeehQFjE',
-		});
 		let msg: string[] = [];
-		
+
 		const res2 = await service.search.list(
 			{
 				q: req.query.q,
@@ -39,8 +38,6 @@ class ItemController {
 				res.send(msg);
 			}
 		);
-
-		
 	}
 
 	async vime(req: Request, res: Response) {
