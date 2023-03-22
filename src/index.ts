@@ -5,13 +5,38 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
 import { itemsRouter } from './router/items.router';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
+// https://juejin.cn/post/7117208351234064414
+// use cors has to be before use router?
+app.use(
+	cors({
+		origin: '*',
+	})
+);
 app.use(helmet());
 app.use(express.json());
 app.use('/', itemsRouter);
+
+// const cors = require('cors');
+// app.use(function (req, res, next) {
+// 	res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+// 	res.setHeader(
+// 		'Access-Control-Allow-Methods',
+// 		'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+// 	);
+// 	res.setHeader(
+// 		'Access-Control-Allow-Headers',
+// 		'X-Requested-With,content-type'
+// 	);
+// 	res.setHeader('Access-Control-Allow-Credentials', 'true');
+// 	next();
+// });
+
+
 
 let todos: string[] = ['todo 1', 'todo 2'];
 

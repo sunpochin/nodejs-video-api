@@ -5,7 +5,7 @@ import * as ItemService from '../models/items.service';
 const { google } = require('googleapis');
 const service = google.youtube({
 	version: 'v3',
-	auth: 'AIzaSyABuFZuMgrpmclQfB2CEdz-VZdMYZN3UNo',
+	auth: 'AIzaSyBzRd59uff7o3OHqOY9jhOtWihZeehQFjE',
 });
 
 class ItemController {
