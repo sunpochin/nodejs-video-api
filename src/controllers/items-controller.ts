@@ -11,9 +11,12 @@ const service = google.youtube({
 class ItemController {
 	async tube(req: Request, res: Response) {
 		console.log('req.query: ', req.query);
+		if ('search' != req.query.act) {
+			console.log('return')
+			return;
+		}
 
 		let msg: string[] = [];
-
 		const res2 = await service.search.list(
 			{
 				q: req.query.q,
