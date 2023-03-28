@@ -1,9 +1,7 @@
 import express, { Request, Response } from 'express';
-const passport = require('passport');
 import jwt from 'jsonwebtoken';
 import querystring from 'querystring';
 import axios from 'axios';
-const { OAuth2Client } = require('google-auth-library');
 
 // const passport = require('passport');
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -16,82 +14,94 @@ import {
 	GOOGLE_CLIENT_SECRET,
 	COOKIE_NAME,
 	UI_ROOT_URI,
-} from './config';
+} from "./config";
 
 const port = 8000;
 
 const redirectURI = 'auth/google/callback';
 
-// Getting the user from Google with the code
-router.get('/failed', (req, res) => {
-	res.send('Failed');
-});
 
-router.get('/success', (req, res) => {
-	console.log('req.user: ', req.user);
-	console.log('req.user: ', req.user.emails[0]);
-	res.send(`Welcome ${req.user.emails[0].value}`);
-});
+function getTokens({
+	code,
+	clientId,
+	clientSecret,
+	redirectUri,
+}: {
+	code: string;
+	clientId: string;
+	clientSecret: string;
+	redirectUri: string;
+}): Promise<{
+	access_token: string;
+	expires_in: Number;
+	refresh_token: string;
+	scope: string;
+	id_token: string;
+}> {
+	/*
+	 * Uses the code to get tokens
+	 * that can be used to fetch the user's profile
+	 */
+	console.log('get tokens');
+	const url = 'https://oauth2.googleapis.com/token';
+	const values = {
+		code,
+		client_id: clientId,
+		client_secret: clientSecret,
+		redirect_uri: redirectUri,
+		grant_type: 'authorization_code',
+	};
 
-
-router.post('/auth/google',async (req: Request, res: Response) => {
-	try {
-		const item = req.body;
-		console.log('req.body: ', req.body)
-		const access_token = req.body.access_token;
-    console.log('req.body accessToken: ', access_token);
-
-		const oauth2Client = new OAuth2Client()
-	  oauth2Client.setCredentials({ access_token: access_token });
-		const userInfo = await oauth2Client
-	    .request({
-	      url: 'https://www.googleapis.com/oauth2/v3/userinfo'
-	    })
-	    .then((response) => response.data)
-	    .catch(() => null)
-
-		console.log('userInfo: ', userInfo)
-
-	  // oauth2Client.revokeCredentials()
-
-		res.status(201).json(userInfo);
-	} catch (e: any) {
-		res.status(500).send(e.message);
-	}
-});
-
-
-// passport.authenticate('google', {
-// 	scope: ['email', 'profile'],
-// })
-router.get(
-	'/google',
-	passport.authenticate('google', {
-		scope: ['email', 'profile'],
-	})
-);
-
-router.get(
-	'/auth/google/callback',
-	passport.authenticate('google', {
-		failureRedirect: '/failed',
-	}),
-	function (req: Request, res: Response) {
-		res.data = req.user;
-		const token = jwt.sign(req.user, JWT_SECRET);
-		console.log('googleUser: ', req.user);
-		console.log('token: ', token);
-
-		res.cookie(COOKIE_NAME, token, {
-			maxAge: 900000,
-			httpOnly: false,
-			secure: false,
+	return axios
+		.post(url, querystring.stringify(values), {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+		})
+		.then((res) => res.data)
+		.catch((error) => {
+			console.error(`Failed to fetch auth tokens`);
+			throw new Error(error.message);
 		});
+}
 
-		res.redirect('http://localhost:8080');
-		// res.redirect('/success');
-	}
-);
+// Getting the user from Google with the code
+router.get(`/${redirectURI}`, async (req, res) => {
+  const code = req.query.code as string;
+
+  const { id_token, access_token } = await getTokens({
+    code,
+    clientId: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    redirectUri: `${SERVER_ROOT_URI}/${redirectURI}`,
+  });
+
+  // Fetch the user's profile with the access token and bearer
+  const googleUser = await axios
+    .get(
+      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${id_token}`,
+        },
+      }
+    )
+    .then((res) => res.data)
+    .catch((error) => {
+      console.error(`Failed to fetch user`);
+      throw new Error(error.message);
+    });
+
+  const token = jwt.sign(googleUser, JWT_SECRET);
+  console.log('googleUser: ', googleUser);
+  res.cookie(COOKIE_NAME, token, {
+    maxAge: 900000,
+    httpOnly: true,
+    secure: false,
+  });
+
+  res.redirect(UI_ROOT_URI);
+});
 
 // Getting the current user
 router.get("/auth/me", (req, res) => {
@@ -105,5 +115,6 @@ router.get("/auth/me", (req, res) => {
     res.send(null);
   }
 });
+
 
 module.exports = router;
