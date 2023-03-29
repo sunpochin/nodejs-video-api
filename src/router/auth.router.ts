@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import querystring from 'querystring';
 import axios from 'axios';
@@ -16,10 +16,7 @@ import {
 	UI_ROOT_URI,
 } from "./config";
 
-const port = 8000;
-
 const redirectURI = 'auth/google/callback';
-
 
 function getTokens({
 	code,
@@ -103,18 +100,38 @@ router.get(`/${redirectURI}`, async (req, res) => {
   res.redirect(UI_ROOT_URI);
 });
 
-// Getting the current user
-router.get("/auth/me", (req, res) => {
-  console.log('get me req.cookies: ', req.cookies);
+
+const vali = (req: Request, res: Response) => {
+	console.log('vali vali req.cookies:', req.cookies);
+	console.log('vali vali req.cookies:', req.cookies[COOKIE_NAME]);
   try {
-    const decoded = jwt.verify(req.cookies[COOKIE_NAME], JWT_SECRET);
-    console.log("decoded", decoded);
-    return res.send(decoded);
-  } catch (err) {
-    console.log(err);
-    res.send(null);
-  }
+		// console.log('jwt: ', jwt);
+		const decoded = jwt.verify(req.cookies[COOKIE_NAME], JWT_SECRET);
+		console.log('decoded', decoded);
+		return decoded
+	} catch (err) {
+		return null
+		// console.log(err);
+		// res.send(null);
+	}
+}
+
+// Getting the current user
+router.get("/auth/me", (req, res, next) => {
+	try {
+		// console.log('get me req.cookies: ', req.cookies);
+		// console.log('get me req.cookies COOKIE_NAME:', req.cookies[COOKIE_NAME]);
+		let ret = vali(req, res);
+		res.send(ret);
+		// next();
+	} catch (err) {
+		res.send(null);
+	}
 });
 
+// router.get("/courses", (req: Request, res: Response) => {
+// 	res.send("COURSES!");
+// });
 
-module.exports = router;
+
+module.exports = {router, vali}
