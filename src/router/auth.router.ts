@@ -10,7 +10,7 @@ import { JWT_SECRET, COOKIE_NAME } from './config';
 
 const redirectURI = 'auth/google/callback';
 
-router.post('/auth/google', async (req: Request, res: Response) => {
+router.post('/google', async (req: Request, res: Response) => {
 	try {
 		const item = req.body;
 		console.log('req.body: ', req.body);
