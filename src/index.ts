@@ -19,7 +19,6 @@ dotenv.config();
 const app = express();
 // https://juejin.cn/post/7117208351234064414
 // use cors has to be before use router?
-export const UI_ROOT_URI = 'http://localhost:5173';
 
 app.use(cookies());
 app.use(
@@ -34,7 +33,6 @@ app.use(
 			'https://localhost:8080',
 			'http://localhost:8080/auth/me',
 			'http://localhost:8080/courses',
-			UI_ROOT_URI,
 		],
 		// Sets Access-Control-Allow-Credentials to true
 		credentials: true,

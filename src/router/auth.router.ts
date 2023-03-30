@@ -2,18 +2,13 @@ import express, { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import querystring from 'querystring';
 import axios from 'axios';
+require('dotenv').config();
 
-// const passport = require('passport');
-// const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const router = express.Router();
 
 import {
-	SERVER_ROOT_URI,
-	GOOGLE_CLIENT_ID,
 	JWT_SECRET,
-	GOOGLE_CLIENT_SECRET,
 	COOKIE_NAME,
-	UI_ROOT_URI,
 } from "./config";
 
 const redirectURI = 'auth/google/callback';
@@ -67,11 +62,11 @@ router.get(`/${redirectURI}`, async (req, res) => {
   const code = req.query.code as string;
 
   const { id_token, access_token } = await getTokens({
-    code,
-    clientId: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    redirectUri: `${SERVER_ROOT_URI}/${redirectURI}`,
-  });
+		code,
+		clientId: process.env["GOOGLE_CLIENT_ID"] as string,
+		clientSecret: process.env["GOOGLE_CLIENT_SECRET"] as string,
+		redirectUri: `${process.env["SERVER_ROOT_URI"]}/${redirectURI}`,
+	});
 
   // Fetch the user's profile with the access token and bearer
   const googleUser = await axios
@@ -97,7 +92,7 @@ router.get(`/${redirectURI}`, async (req, res) => {
     secure: false,
   });
 
-  res.redirect(UI_ROOT_URI);
+  res.redirect(process.env["UI_ROOT_URI"] as string);
 });
 
 
