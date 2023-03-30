@@ -25,14 +25,14 @@ app.use(
 	cors({
 		// Sets Access-Control-Allow-Origin to the UI URI
 		origin: [
-			'http://localhost:5173',
-			'https://localhost:5173',
 			'http://localhost:8000',
 			'https://localhost:8000',
 			'http://localhost:8080',
 			'https://localhost:8080',
-			'http://localhost:8080/auth/me',
-			'http://localhost:8080/courses',
+			'http://localhost:8000/auth/me',
+			'http://localhost:8000/courses',
+			'http://localhost:5173',
+			'https://localhost:5173',
 		],
 		// Sets Access-Control-Allow-Credentials to true
 		credentials: true,
