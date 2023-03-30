@@ -86,8 +86,8 @@ router.get(`/${redirectURI}`, async (req, res) => {
       throw new Error(error.message);
     });
 
-  const token = jwt.sign(googleUser, JWT_SECRET);
   console.log('googleUser: ', googleUser);
+  const token = jwt.sign(googleUser, JWT_SECRET);
   res.cookie(COOKIE_NAME, token, {
     maxAge: 900000,
     httpOnly: true,

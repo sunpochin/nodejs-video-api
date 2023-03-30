@@ -23,6 +23,14 @@ router.post('/google', async (req: Request, res: Response) => {
 		});
 		const payload = ticket.getPayload();
 		console.log('payload: ', payload);
+
+		const token = jwt.sign(payload, JWT_SECRET);
+		res.cookie(COOKIE_NAME, token, {
+			maxAge: 900000,
+			httpOnly: true,
+			secure: false,
+		});
+
 		res.status(201).json(payload);
 	} catch (e: any) {
 		res.status(500).send(e.message);
