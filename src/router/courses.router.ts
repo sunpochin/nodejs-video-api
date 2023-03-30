@@ -1,9 +1,5 @@
 const auth = require('./auth.router');
-//...
 import express, { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import querystring from 'querystring';
-import axios from 'axios';
 
 const router = express.Router();
 
