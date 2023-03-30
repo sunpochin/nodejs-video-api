@@ -91,7 +91,7 @@ router.get(`/${redirectURI}`, async (req, res) => {
     httpOnly: true,
     secure: false,
   });
-
+	console.log('process.env["UI_ROOT_URI"]: ', process.env['UI_ROOT_URI']);
   res.redirect(process.env["UI_ROOT_URI"] as string);
 });
 
