@@ -3,82 +3,49 @@
 
 import * as dotenv from 'dotenv';
 import express from 'express';
-// import helmet from 'helmet';
+import helmet from 'helmet';
 import { itemsRouter } from './router/items.router';
-import session from "express-session";
-import auth from "./router/auth.router";
+// import {router} from "./router/auth.router";
+const auth = require('./router/auth.router');
+const course = require('./router/courses.router');
+// import courses from "./router/courses.router"
 import cors from 'cors';
 var cookies = require('cookie-parser');
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-require('./passport');
+// const session = require('express-session');
+// const passport = require('passport');
 
 dotenv.config();
 
 const app = express();
 // https://juejin.cn/post/7117208351234064414
 // use cors has to be before use router?
-export const UI_ROOT_URI = 'http://localhost:5173';
-//app.use(cookies());
-// app.use(
-// 	cookieSession({
-// 		name: 'google-auth-session',
-// 		keys: ['key1', 'key2'],
-// 	})
-// );
-// Authentication configuration
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: 'bla bla bla'
-}));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
+app.use(cookies());
 app.use(
 	cors({
 		// Sets Access-Control-Allow-Origin to the UI URI
 		origin: [
-			UI_ROOT_URI,
-			'https://localhost:5173',
-			'https://localhost:8000',
+			'https://petknow-vue3.netlify.app',
 			'http://localhost:8000',
+			'https://localhost:8000',
+			'http://localhost:8080',
+			'https://localhost:8080',
+			'http://localhost:8000/auth/me',
+			'http://localhost:8000/courses',
+			'http://localhost:5173',
+			'https://localhost:5173',
 		],
 		// Sets Access-Control-Allow-Credentials to true
 		credentials: true,
 	})
 );
 
-// app.use(helmet());
+
+app.use(helmet());
 app.use(express.json());
 app.use('/items', itemsRouter);
-app.use('/', auth);
-
-// app.get('/failed', (req, res) => {
-// 	res.send('Failed');
-// });
-// app.get('/success', (req, res) => {
-// 		console.log('req.user: ', req.user);
-// 	res.send(`Welcome ${req.user.displayName}`);
-// });
-
-// app.get(
-// 	'/google',
-// 	passport.authenticate('google', {
-// 		scope: ['email', 'profile'],
-// 	})
-// );
-
-// app.get(
-// 	'/auth/google/callback',
-// 	passport.authenticate('google', {
-// 		failureRedirect: '/failed',
-// 	}),
-// 	function (req, res) {
-// 		res.redirect('/success');
-// 	}
-// );
+app.use('/', auth.router);
+app.use('/courses', course);
 
 // app.get('/', function (req, res) {
 // 	res.json('nodejs video');
