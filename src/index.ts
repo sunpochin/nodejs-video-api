@@ -6,7 +6,7 @@ import express from 'express';
 // import helmet from 'helmet';
 import { itemsRouter } from './router/items.router';
 import session from "express-session";
-import auth from "./router/auth.router";
+import { authRouter } from './router/auth.router';
 import cors from 'cors';
 var cookies = require('cookie-parser');
 const passport = require('passport');
@@ -53,7 +53,7 @@ app.use(
 // app.use(helmet());
 app.use(express.json());
 app.use('/items', itemsRouter);
-app.use('/', auth);
+app.use('/', authRouter);
 
 // app.get('/failed', (req, res) => {
 // 	res.send('Failed');
@@ -91,7 +91,8 @@ app.get('/todos', (req, res) => {
 });
 
 // 啟動服務器
-const port = 8000;
+const port = process.env.PORT || '8000';
+
 app.listen(port, () => {
 	console.log(`Server listening at http://localhost:${port}`);
 });

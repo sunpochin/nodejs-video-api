@@ -27,7 +27,7 @@ router.get('/failed', (req, res) => {
 	res.send('Failed');
 });
 
-router.get('/success', (req, res) => {
+router.get('/success', (req: any, res) => {
 	console.log('req.user: ', req.user);
 	console.log('req.user: ', req.user.emails[0]);
 	res.send(`Welcome ${req.user.emails[0].value}`);
@@ -47,7 +47,7 @@ router.post('/auth/google',async (req: Request, res: Response) => {
 	    .request({
 	      url: 'https://www.googleapis.com/oauth2/v3/userinfo'
 	    })
-	    .then((response) => response.data)
+	    .then((response: any) => response.data)
 	    .catch(() => null)
 
 		console.log('userInfo: ', userInfo)
@@ -76,7 +76,7 @@ router.get(
 	passport.authenticate('google', {
 		failureRedirect: '/failed',
 	}),
-	function (req: Request, res: Response) {
+	function (req: any, res: any) {
 		res.data = req.user;
 		const token = jwt.sign(req.user, JWT_SECRET);
 		console.log('googleUser: ', req.user);
@@ -106,4 +106,4 @@ router.get("/auth/me", (req, res) => {
   }
 });
 
-module.exports = router;
+export const authRouter = router;
