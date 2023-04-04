@@ -32,7 +32,6 @@ workflows:
   build:
     jobs:
       - build:
-          app-dir: backend
           filters:
             branches:
               only: main
