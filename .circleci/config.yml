@@ -44,6 +44,9 @@ jobs:
       - run:
           name: Build backend
           command: yarn
+      - run:
+          name: Run test for the application
+          command: yarn test:unit
       - store_artifacts:
           path: |
             backend/build
