@@ -18,8 +18,15 @@ jobs:
           pkg-manager: yarn
           app-dir: frontend
       - run:
-          name: Build FRONTEND
-          command: yarn build
+          name: Install dependencies
+          command: |
+            cd frontend
+            yarn install
+      - run:
+          name: Build frontend
+          command: |
+            cd frontend
+            yarn build
       # - store_artifacts:
       #     path: |
       #       frontend/build
