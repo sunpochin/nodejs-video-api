@@ -3,8 +3,12 @@
 // File: __tests__/user.model.test.js
 
 const mongoose = require('mongoose');
+const env = require('dotenv').config();
+
+console.log('process.env.MONGODB_URI: ', process.env.MONGODB_URI);
+
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/testUser', {
+mongoose.connect(process.env.MONGODB_URI, {
 	useNewUrlParser: true,
 });
 mongoose.connection.on('error', () => {

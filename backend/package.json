@@ -4,7 +4,7 @@
 	"description": "The project by north-10 group",
 	"main": "src/index.js",
 	"scripts": {
-	  "test:unit": "jest",
+	  "test:unit": "jest --coverage",
 		"start": "npx ts-node src/index.ts",
 		"mon": "nodemon src/index.ts",
 		"dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
