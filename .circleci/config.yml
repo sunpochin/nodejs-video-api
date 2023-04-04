@@ -27,10 +27,10 @@ jobs:
           command: |
             cd frontend
             yarn build
-      # - store_artifacts:
-      #     path: |
-      #       frontend/build
-      #     destination: builds
+      - store_artifacts:
+          path: |
+            frontend/build
+          destination: builds
 
   build-backend:
     docker:
@@ -47,7 +47,6 @@ jobs:
       - store_artifacts:
           path: |
             backend/build
-            frontend/build
           destination: builds
 
 workflows:
@@ -58,7 +57,7 @@ workflows:
           filters:
             branches:
               only: main
-      # - build-backend:
-      #     filters:
-      #       branches:
-      #         only: main
+      - build-backend:
+          filters:
+            branches:
+              only: main
