@@ -17,10 +17,10 @@ jobs:
           app-dir: backend
       # - run:
       #     name: Build frontend
-      #     command: yarn --cwd frontend build
+      #     command: yarn --cwd frontend
       - run:
           name: Build backend
-          command: yarn --cwd backend build
+          command: yarn --cwd backend
       # - run:
       #     name: Build api-docs
       #     command: yarn --cwd path/to/api-docs build
