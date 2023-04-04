@@ -41,7 +41,7 @@ jobs:
           app-dir: backend
       - run:
           name: Build FRONTEND
-          command: yarn --cwd frontned build
+          command: yarn --cwd frontend build
       - store_artifacts:
           path: |
             frontend/build
