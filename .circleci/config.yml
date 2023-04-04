@@ -6,7 +6,7 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
-  build:
+  build-backend:
     docker:
       - image: cimg/node:19.8.1
     executor: node/default
@@ -18,9 +18,9 @@ jobs:
       - run:
           name: Build backend
           command: yarn --cwd backend
-      - run:
-          name: Build frontend
-          command: yarn --cwd frontend build
+      # - run:
+      #     name: Build frontend
+      #     command: yarn --cwd frontend build
       # - run:
       #     name: Build api-docs
       #     command: yarn --cwd path/to/api-docs build
