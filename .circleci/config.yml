@@ -63,6 +63,7 @@ jobs:
           app-dir: backend
       - run:
           name: Run test for the application
+          app-dir: backend
           command: yarn test:unit
       - store_artifacts:
           path: |
