@@ -41,9 +41,9 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
           app-dir: backend
-      - run:
-          name: Build backend
-          command: yarn
+      # - run:
+      #     name: Build backend
+      #     command: yarn
       - run:
           name: Run test for the application
           command: yarn test:unit
