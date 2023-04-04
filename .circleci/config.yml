@@ -70,7 +70,7 @@ jobs:
       - run:
           name: Send coverage data to Coveralls
           command: |
-            npm run coverage
+            yarn --cwd backend coverage
           
       - store_artifacts:
           path: |
