@@ -6,6 +6,23 @@ orbs:
   node: circleci/node@4.1.0
 
 jobs:
+  build-frontend:
+    docker:
+      - image: cimg/node:19.8.1
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+          app-dir: /frontend
+      - run:
+          name: Build FRONTEND
+          command: yarn --cwd frontend build
+      # - store_artifacts:
+      #     path: |
+      #       frontend/build
+      #     destination: builds
+
   build-backend:
     docker:
       - image: cimg/node:19.8.1
@@ -24,22 +41,6 @@ jobs:
             frontend/build
           destination: builds
 
-  build-frontend:
-    docker:
-      - image: cimg/node:19.8.1
-    executor: node/default
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-          app-dir: /frontend
-      - run:
-          name: Build FRONTEND
-          command: yarn --cwd frontend build
-      - store_artifacts:
-          path: |
-            frontend/build
-          destination: builds
 
 workflows:
   version: 2
