@@ -32,7 +32,27 @@ jobs:
             frontend/build
           destination: builds
 
-  build-backend:
+  # build-backend:
+  #   docker:
+  #     - image: cimg/node:19.8.1
+  #   executor: node/default
+  #   steps:
+  #     - checkout
+  #     - node/install-packages:
+  #         pkg-manager: npm
+  #         app-dir: backend
+  #     # - run:
+  #     #     name: Build backend
+  #     #     command: yarn
+  #     - run:
+  #         name: Run test for the application
+  #         command: yarn test:unit
+  #     - store_artifacts:
+  #         path: |
+  #           backend/build
+  #         destination: builds
+
+  unit-test-backend:
     docker:
       - image: cimg/node:19.8.1
     executor: node/default
@@ -41,9 +61,6 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
           app-dir: backend
-      # - run:
-      #     name: Build backend
-      #     command: yarn
       - run:
           name: Run test for the application
           command: yarn test:unit
@@ -56,11 +73,11 @@ workflows:
   version: 2
   build:
     jobs:
-      - build-frontend:
+      - unit-test-backend:
           filters:
             branches:
               only: main
-      - build-backend:
-          filters:
-            branches:
-              only: main
+      # - build-frontend:
+      #     filters:
+      #       branches:
+      #         only: main
