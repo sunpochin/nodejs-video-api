@@ -32,10 +32,10 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
-          app-dir: backend
+          app-dir: frontend
       - run:
           name: Build FRONTEND
-          command: yarn --cwd backend
+          command: yarn --cwd frontend build
       - store_artifacts:
           path: |
             frontend/build
