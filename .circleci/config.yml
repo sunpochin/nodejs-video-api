@@ -62,8 +62,16 @@ jobs:
           pkg-manager: npm
           app-dir: backend
       - run:
+          name: Build backend
+          command: yarn
+      - run:
           name: Run test for the application
           command: yarn --cwd backend test:unit
+      - run:
+          name: Send coverage data to Coveralls
+          command: |
+            npm run coverage
+          
       - store_artifacts:
           path: |
             backend/build

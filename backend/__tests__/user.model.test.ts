@@ -23,13 +23,13 @@ afterAll(async () => {
 	}
 });
 
-afterEach(async () => {
-	try {
-		await User.deleteMany({});
-	} catch (err) {
-		console.log(err);
-	}
-});
+// afterEach(async () => {
+// 	try {
+// 		await User.deleteMany({});
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
 const User = require('../src/models/user.model.js');
 
