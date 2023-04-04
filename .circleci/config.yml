@@ -29,6 +29,7 @@ jobs:
             backend/build
             frontend/build
           destination: builds
+
   build-frontend:
     docker:
       - image: cimg/node:19.8.1
@@ -37,13 +38,12 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn
-          app-dir: frontend
+          app-dir: backend
       - run:
-          name: Build FRONTE
+          name: Build FRONTEND
           command: yarn --cwd frontned build
       - store_artifacts:
           path: |
-            backend/build
             frontend/build
           destination: builds
 
