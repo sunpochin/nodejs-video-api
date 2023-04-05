@@ -32,26 +32,6 @@ jobs:
             frontend/build
           destination: builds
 
-  # build-backend:
-  #   docker:
-  #     - image: cimg/node:19.8.1
-  #   executor: node/default
-  #   steps:
-  #     - checkout
-  #     - node/install-packages:
-  #         pkg-manager: npm
-  #         app-dir: backend
-  #     # - run:
-  #     #     name: Build backend
-  #     #     command: yarn
-  #     - run:
-  #         name: Run test for the application
-  #         command: yarn test:unit
-  #     - store_artifacts:
-  #         path: |
-  #           backend/build
-  #         destination: builds
-
   unit-test-backend:
     docker:
       - image: cimg/node:19.8.1
@@ -73,7 +53,7 @@ jobs:
           command: yarn
       - run:
           name: Run test for the application
-          command: yarn --cwd backend test:unit
+          command: yarn test:unit
       - run:
           name: Send coverage data to Coveralls
           command: |
