@@ -49,9 +49,6 @@ jobs:
             cd backend
             yarn
       - run:
-          name: Build backend
-          command: yarn
-      - run:
           name: Run test for the application
           command: |
             cd backend
@@ -59,7 +56,8 @@ jobs:
       - run:
           name: Send coverage data to Coveralls
           command: |
-            yarn --cwd backend coverage
+            cd backend
+            yarn coverage
       # - save_cache:
       #     key: dependency-cache-{{ checksum "backend/package-lock.json" }}
       #     paths:
