@@ -53,7 +53,9 @@ jobs:
           command: yarn
       - run:
           name: Run test for the application
-          command: yarn test:unit
+          command: |
+            cd backend
+            yarn test:unit
       - run:
           name: Send coverage data to Coveralls
           command: |
