@@ -60,7 +60,11 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-          app-dir: backend
+      - run:
+          name: Install dependencies
+          command: |
+            cd backend
+            yarn
       - run:
           name: Build backend
           command: yarn
@@ -71,7 +75,6 @@ jobs:
           name: Send coverage data to Coveralls
           command: |
             yarn --cwd backend coverage
-          
       - store_artifacts:
           path: |
             backend/build
