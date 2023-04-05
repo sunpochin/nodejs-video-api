@@ -60,6 +60,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
+          app-dir: backend
       - run:
           name: Install dependencies
           command: |
