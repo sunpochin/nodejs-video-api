@@ -1,6 +1,10 @@
 import { Request, Response, RequestHandler } from 'express';
 import { Item, Items } from '../models/items.interface';
 import * as ItemService from '../models/items.service';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+const redirect_URI = 'auth/google/callback';
 
 const { google } = require('googleapis');
 const service = google.youtube({
@@ -9,10 +13,44 @@ const service = google.youtube({
 });
 
 class ItemController {
+	upload(req: Request, res: Response) {
+		const { OAuth2Client } = require('google-auth-library');
+
+		const client_id = process.env.GOOGLE_CLIENT_ID;
+		const client_secret = process.env.GOOGLE_CLIENT_SECRET;
+		const redirect_uri = redirect_URI;
+
+		const oauth2Client = new OAuth2Client(
+			client_id,
+			client_secret,
+			redirect_uri
+		);
+		const scopes = ['https://www.googleapis.com/auth/youtube.upload'];
+
+		const authUrl = oauth2Client.generateAuthUrl({
+			access_type: 'offline',
+			scope: scopes,
+		});
+		const code = 'AUTHORIZATION_CODE';
+		oauth2Client.getToken(code, (err, token) => {
+			if (err) {
+				console.error('Error while trying to retrieve access token', err);
+				return;
+			}
+			oauth2Client.setCredentials(token);
+			const youtube = google.youtube({
+				version: 'v3',
+				auth: oauth2Client,
+			});
+			// 在此處調用上傳影片的函數
+		});
+		
+	}
+
 	async tube(req: Request, res: Response) {
 		console.log('req.query: ', req.query);
 		if ('search' != req.query.act) {
-			console.log('return')
+			console.log('return');
 			return;
 		}
 
@@ -57,8 +95,8 @@ class ItemController {
 				// path: '/tutorial',
 				// path: '/users/user13911393',
 				// path: '/videos/807306477',
-				path: '/users/13911393/projects',
-				// path: '/users/13911393/projects/15430542/videos',
+				// path: '/users/13911393/projects',
+				path: '/users/13911393/projects/15430542/videos',
 			},
 			function (error: any, body: any, status_code: any, headers: any) {
 				if (error) {

@@ -34,6 +34,7 @@ const con = new ItemController();
 itemsRouter.get('/', con.listItems);
 itemsRouter.get('/vime', con.vime);
 itemsRouter.get('/tube', con.tube);
+itemsRouter.get('/upload', con.upload);
 
 // GET items/:id
 // import {
@@ -41,7 +42,7 @@ itemsRouter.get('/tube', con.tube);
 // } from './items-controller';
 // itemsRouter.get('/:id', getItem);
 
-itemsRouter.get('/:id', con.getItem );
+// itemsRouter.get('/:id', con.getItem );
 
 // POST items
 
