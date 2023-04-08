@@ -34,11 +34,15 @@
 		"jsonwebtoken": "^9.0.0",
 		"mocha": "^10.2.0",
 		"mongoose": "^7.0.3",
+		"multer": "^1.4.5-lts.1",
+		"open": "^9.1.0",
 		"passport": "^0.6.0",
 		"passport-google-oauth": "^2.0.0",
 		"request": "^2.88.2",
 		"uuid": "^9.0.0",
-		"vimeo": "^2.1.1"
+		"vimeo": "^2.1.1",
+		"youtube-api": "^3.0.1",
+		"youtube-videos-uploader": "^2.0.18"
 	},
 	"devDependencies": {
 		"@tsconfig/node16": "^1.0.3",
