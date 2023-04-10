@@ -25,6 +25,7 @@ app.use(
 	cors({
 		// Sets Access-Control-Allow-Origin to the UI URI
 		origin: [
+			'https://4ihr74.csb.app',
 			'https://petknow-vue3.netlify.app',
 			'http://localhost:8000',
 			'https://localhost:8000',

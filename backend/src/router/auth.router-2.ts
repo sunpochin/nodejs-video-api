@@ -140,7 +140,7 @@ router.post('/auth/google', async (req: Request, res: Response) => {
 			.request({
 				url: 'https://www.googleapis.com/oauth2/v3/userinfo',
 			})
-			.then((response) => response.data)
+			.then((response: any) => response.data)
 			.catch(() => null);
 
 		console.log('userInfo: ', userInfo);
