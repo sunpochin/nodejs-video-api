@@ -25,10 +25,3 @@ const Routes = () => (
 const rootElement = document.getElementById('root');
 ReactDOM.render(<App />, rootElement);
 
-// const root = ReactDOM.createRoot(document.getElementById('root'));
-//root.render(<Routes />);
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
