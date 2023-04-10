@@ -32,7 +32,7 @@ class ItemController {
 			scope: scopes,
 		});
 		const code = 'AUTHORIZATION_CODE';
-		oauth2Client.getToken(code, (err, token) => {
+		oauth2Client.getToken(code, (err: any, token: any) => {
 			if (err) {
 				console.error('Error while trying to retrieve access token', err);
 				return;
