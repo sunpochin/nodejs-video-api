@@ -39,7 +39,7 @@ jobs:
     steps:
       - checkout
       - node/install-packages:
-          pkg-manager: npm
+          pkg-manager: yarn
           app-dir: backend
       # - restore_cache:
       #     key: dependency-cache-{{ checksum "backend/package-lock.json" }}

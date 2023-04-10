@@ -43,8 +43,8 @@ app.use(
 
 app.use(helmet());
 app.use(express.json());
-app.use('/items', itemsRouter);
-app.use('/', auth.router);
+app.use('/', itemsRouter);
+// app.use('/', auth.router);
 app.use('/courses', course);
 
 // app.get('/', function (req, res) {
