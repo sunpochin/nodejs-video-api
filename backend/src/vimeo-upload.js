@@ -4,7 +4,8 @@ const Vimeo = require('vimeo').Vimeo;
 const CLIENT_ID = '6ae2aef0e381d6eb06d0a2e2b2e9b47b50452ae4';
 const CLIENT_SECRET =
 	'+HyK0t+nNFj5oRUFsoKvKr6bxVacEgYjYFMU10l+xT7zoCgj8wLPacrHMDE0mHWc2EKvjBhj182Pooa1hHfVst0VJsWOErZXHZhAF6oj2xdC4cYtTaGx6bSxonUrKuLd';
-const ACCESS_TOKEN = 'cec72ada1571c4a094bf9a7414b6bdc8';
+	
+const ACCESS_TOKEN = '1ecd37d4819e70afff197bd8ade19121';
 
 
 let client = new Vimeo(CLIENT_ID, CLIENT_SECRET, ACCESS_TOKEN);

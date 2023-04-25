@@ -5,7 +5,9 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
 import { itemsRouter } from './router/items.router';
-// import {router} from "./router/auth.router";
+
+import { vimeoRouter } from "./router/vimeo.router";
+
 const auth = require('./router/auth.router');
 const course = require('./router/courses.router');
 // import courses from "./router/courses.router"
@@ -47,6 +49,7 @@ app.use(express.json());
 app.use('/', itemsRouter);
 // app.use('/', auth.router);
 app.use('/courses', course);
+app.use('/vimeo', vimeoRouter);
 
 // app.get('/', function (req, res) {
 // 	res.json('nodejs video');

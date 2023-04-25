@@ -66,9 +66,11 @@ router.post('/upload', uploadVideoFile, (req: any, res: any) => {
 });
 
 
-router.get('/oauth2callback', (req, res) => {
+router.get('/oauth2callback', (req: any, res: any) => {
 	res.redirect('https://4ihr74.csb.app/success');
 	const { filename, title, description } = JSON.parse(req.query.state);
+//  let fullpath = __dirname + '/../../uploads/' + filename;
+  let fullpath = './uploads/' + filename;
 	const code = req.query.code;
 	oAuth.getToken(code, (err: any, tokens: any) => {
 		if (err) {
@@ -82,18 +84,18 @@ router.get('/oauth2callback', (req, res) => {
 				resource: {
 					snippet: { title, description },
 					status: {
-						privacyStatus: 'private',
+						privacyStatus: 'unlisted',
 					},
 				},
 				part: 'snippet, status',
 				media: {
-					body: fs.createReadStream(filename),
+					body: fs.createReadStream(fullpath),
 				},
 			},
-			(err, data) => {
+			(err: any, data: any) => {
 				console.log('err: ', err);
 				console.log('done');
-				process.exit();
+				// process.exit();
 			}
 		);
 	});
